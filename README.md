@@ -77,7 +77,7 @@ npx prisma studio
 npx prisma migrate status
 ```
 
-> 💡 **Why `npx`?** `prisma` is installed as a dev dependency. `npx` temporarily exposes the local binary without installing it globally.
+> 💡 **Why `npx`?** `prisma` is installed as a dev dependency. `npx` temporarily exposes the local binary installed in node_modules without installing it globally.
 
 ---
 

@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { RegisterError, RegisterSuccess } from '@/types/api';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,21 +18,27 @@ export default function RegisterPage() {
       body: JSON.stringify({ email, username, password }),
     });
 
-    const data = await res.json();
-    console.log(data);
+    if (!res.ok) {
+      const { error }: RegisterError = await res.json();
+      setMessage(error);
+      return;
+    }
+
+    const { message }: RegisterSuccess = await res.json();
+    setMessage(message);
   };
   return (
     <>
       <h1>Register</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <label className="block">username</label>
+        <label className="block">email</label>
         <input
           value={email}
           className="bg-gray-100"
           placeholder="email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label className="block">password</label>
+        <label className="block">username</label>
         <input
           value={username}
           className="bg-gray-100"
@@ -48,6 +56,7 @@ export default function RegisterPage() {
           submit
         </button>
       </form>
+      {message && <p>{message}</p>}
     </>
   );
 }
