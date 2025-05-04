@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { RegisterError, RegisterSuccess } from '@/types/api';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -57,6 +58,7 @@ export default function RegisterPage() {
         </button>
       </form>
       {message && <p>{message}</p>}
+      <Link href="/login">Login</Link>
     </>
   );
 }
